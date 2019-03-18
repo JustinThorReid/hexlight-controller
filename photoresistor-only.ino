@@ -2,7 +2,7 @@
 #include <avr/power.h>
 #include "pattern.h"
 
-#define NUM_HEX 2 // number of hex's
+#define NUM_HEX 5 // number of hex's
 #define NUM_LED 12 // leds per hex
 
 #define PRESISTOR_PIN A0

@@ -1,9 +1,6 @@
 #include <avr/sleep.h>
 #include <avr/power.h>
-#include "pattern.h"
-
-#define NUM_HEX 5 // number of hex's
-#define NUM_LED 12 // leds per hex
+#include "PatternController.h"
 
 #define PRESISTOR_PIN A0
 #define RANDOM_PIN A2
@@ -20,7 +17,7 @@ void setup() {
   
   // put your setup code here, to run once:
   randomSeed(analogRead(RANDOM_PIN));
-  ledController = new PatternController(NUM_LED, NUM_HEX);
+  ledController = new PatternController();
 
   // Initialize sensor pins
   pinMode(PRESISTOR_PIN, INPUT);
@@ -59,7 +56,7 @@ void activeStateStart() {
   }
 
   startMillis = millis();
-  ledController->setType(SOLID_MIX);
+  ledController->setType(0);
 }
 
 void activeState() {  

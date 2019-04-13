@@ -1,5 +1,6 @@
 #include <avr/sleep.h>
 #include <avr/power.h>
+
 #include "PatternController.h"
 
 #define PRESISTOR_PIN A0

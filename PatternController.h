@@ -21,7 +21,7 @@ class PatternController {
     void PatternController::clear();
   
   private:
-    Pattern *allPatterns;
+    Pattern **allPatterns;
     CRGB *leds[LINE_COUNT];
     Pattern *currentPattern;
 };

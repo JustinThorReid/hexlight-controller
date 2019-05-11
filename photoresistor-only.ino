@@ -23,6 +23,7 @@ void setup() {
   // Initialize sensor pins
   pinMode(PRESISTOR_PIN, INPUT);
 
+  Serial.println("SETUP DONE");
   activeStateStart();
 }
 
@@ -33,7 +34,7 @@ unsigned long startMillis = 0;
 #define MODE_WAIT false
 bool waitMode;
 
-#define ROLLING_COUNT 200
+#define ROLLING_COUNT 100
 int activeRollingValues[ROLLING_COUNT];
 int activeRollingIndex = 0;
 int activeRollingCount = 0;
@@ -58,6 +59,7 @@ void activeStateStart() {
 
   startMillis = millis();
   ledController->setType(0);
+  Serial.println("Set type done");
 }
 
 void activeState() {  

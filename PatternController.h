@@ -16,7 +16,7 @@ class PatternController {
     void unset();
   
     /// Get a hex color (based on first LED)
-    // CRGB PatternController::getHex(uint8_t id);
+    CRGB PatternController::getHex(uint8_t id);
     
     /// Set a hex to a solid color
     void PatternController::setHex(uint8_t id, CRGB color);

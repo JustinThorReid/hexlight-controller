@@ -5,6 +5,7 @@
 #include "PSolidGlow.h"
 #include "PSpecks.h"
 #include "PSnake.h"
+#include "PFlood.h"
 
 #define LED_PER_HEX 12 // leds per hex
 #define LINE_0_PIXEL_COUNT 5
@@ -60,6 +61,9 @@ void PatternController::setType(uint8_t patternId) {
     case 3:
       this->currentPattern = new P_Snake(this);
       break;
+    case 4:
+      this->currentPattern = new P_Flood(this);
+      break;
     default:
       this->currentPattern = NULL;
   }
@@ -86,30 +90,30 @@ void PatternController::clear() {
   FastLED.clear(false);
 }
 
-// CRGB PatternController::getHex(uint8_t id) {
-//   switch (id) {
-//     case 0:
-//       return this->leds[0][0];
-//       break;
-//     case 1 ... 5:
-//       return this->leds[1][0];
-//       break;
-//     case 6 ... 9:
-//       return this->leds[2][0];
-//       break;
-//     case 10 ... 13:
-//       return this->leds[3][0];
-//       break;
-//     case 14 ... 18:
-//       return this->leds[4][0];
-//       break;
-//     case 19 ... 23:
-//       return this->leds[5][0];
-//       break;
-//     default:
-//       return this->leds[0][0];
-//   }
-// }
+CRGB PatternController::getHex(uint8_t id) {
+  switch (id) {
+    case 0:
+      return this->leds[0][0];
+      break;
+    case 1 ... 5:
+      return this->leds[1][0];
+      break;
+    case 6 ... 9:
+      return this->leds[2][0];
+      break;
+    case 10 ... 13:
+      return this->leds[3][0];
+      break;
+    case 14 ... 18:
+      return this->leds[4][0];
+      break;
+    case 19 ... 23:
+      return this->leds[5][0];
+      break;
+    default:
+      return this->leds[0][0];
+  }
+}
 
 void PatternController::setHex(uint8_t id, CRGB color) {
   CRGB *leds;

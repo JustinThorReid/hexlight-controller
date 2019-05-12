@@ -59,7 +59,7 @@ void activeStateStart() {
   }
 
   startMillis = millis();
-  ledController->setType(3);
+  ledController->setType(4);
   Serial.println("Set type done");
 }
 

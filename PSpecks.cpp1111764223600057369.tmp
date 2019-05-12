@@ -1,7 +1,7 @@
 #include "PSpecks.h"
 
 #define MIN_TIME 10
-#define MAX_TIME 250
+#define MAX_TIME 750
 #define FADE_RATE 15
 
 void P_Specks::tick(unsigned long milli) {
@@ -16,7 +16,8 @@ void P_Specks::tick(unsigned long milli) {
     for(uint8_t i = 0; i < HEX_COUNT; i++) {
       if(this->values[i]) {
         this->values[i] -= 1;
-        this->parent->setHex(i, CHSV(this->colors[i], 200, this->values[i]));
+//        this->parent->setHex(i, CHSV(this->colors[i], 200, this->values[i]));
+        this->parent->setHex(i, CHSV(255, 200, this->values[i]));
       }
     }
   }
@@ -26,9 +27,9 @@ void P_Specks::tick(unsigned long milli) {
     this->nextSpeck = random(MIN_TIME, MAX_TIME);
 
     uint8_t id = random(0, HEX_COUNT-1);
-    this->colors[id] = random(255);
+//    this->colors[id] = random(255);
     this->values[id] = random(200, 255);
-    this->parent->setHex(id, CHSV(this->colors[id], 200, this->values[id]));
+    this->parent->setHex(id, CHSV(255, 200, this->values[id]));
   }
 }
 
@@ -38,7 +39,7 @@ void P_Specks::init() {
   this->nextSpeck = 0;
 
   for(uint8_t i = 0; i < HEX_COUNT; i++) {
-    this->colors[i] = 0;
+//    this->colors[i] = 0;
     this->values[i] = 0;
   }
 }

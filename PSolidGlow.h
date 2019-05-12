@@ -12,9 +12,7 @@ class P_SolidGlow : public Pattern {
     void init();
 
   private:
-    uint8_t hexColors[HEX_COUNT];
-    
+    uint8_t hexColors[HEX_COUNT];    
     uint8_t hexOffsets[HEX_COUNT];
-    uint8_t lastSec;
 };
 #endif

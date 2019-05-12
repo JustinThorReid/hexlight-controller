@@ -15,13 +15,14 @@ class PatternController {
     void tick(unsigned long milli);
     void unset();
   
+    /// Get a hex color (based on first LED)
+    CRGB PatternController::getHex(uint8_t id);
     /// Set a hex to a solid color
     void PatternController::setHex(uint8_t id, CRGB color);
     /// Set all leds to black
     void PatternController::clear();
   
   private:
-    Pattern **allPatterns;
     CRGB *leds[LINE_COUNT];
     Pattern *currentPattern;
 };

@@ -16,13 +16,9 @@ void P_SolidGlow::tick(unsigned long milli) {
   }
 }
 
-void P_SolidGlow::init() {
-  Serial.println("Solid glow init");
-  
+void P_SolidGlow::init() {  
   for(uint8_t i = 0; i < HEX_COUNT; i++) {
     this->hexColors[i] = random(255);
     this->hexOffsets[i] = random(255);
-    
-//    this->parent->setHex(i, this->hexColors[i]);
   }
 }

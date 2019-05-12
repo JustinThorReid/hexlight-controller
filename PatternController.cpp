@@ -3,6 +3,7 @@
 #include "PatternController.h"
 #include "PWalk.h"
 #include "PSolidGlow.h"
+#include "PSpecks.h"
 
 #define LED_PER_HEX 12 // leds per hex
 #define LINE_0_PIXEL_COUNT 5
@@ -21,9 +22,6 @@
 
 PatternController::PatternController() {
   this->currentPattern = NULL;
-  this->allPatterns = new Pattern*[1];
-//  this->allPatterns[1] = new P_Walk(this); 
-  this->allPatterns[0] = new P_SolidGlow(this); 
 
   // Configure FastLED
   this->leds[0] = new CRGB[LINE_0_PIXEL_COUNT];
@@ -44,8 +42,25 @@ PatternController::PatternController() {
 void PatternController::setType(uint8_t patternId) {
   FastLED.clear(true);
   
-  this->currentPattern = allPatterns[patternId];
-  this->currentPattern->init();
+  // Free old memory
+  if(this->currentPattern) delete this->currentPattern;
+  
+  // Create new pattern
+  switch (patternId) {
+    case 0:
+      this->currentPattern = new P_Walk(this);
+      break;
+    case 1:
+      this->currentPattern = new P_SolidGlow(this);
+      break;
+    case 2:
+      this->currentPattern = new P_Specks(this);
+      break;
+    default:
+      this->currentPattern = NULL;
+  }
+
+  if(this->currentPattern) this->currentPattern->init();
   
   FastLED.show();  
 }
@@ -58,12 +73,38 @@ void PatternController::tick(unsigned long milli) {
 }
 
 void PatternController::unset() {
+  if(this->currentPattern) delete this->currentPattern;
   this->currentPattern = NULL;
   FastLED.clear(true);
 }
 
 void PatternController::clear() {
   FastLED.clear(false);
+}
+
+CRGB PatternController::getHex(uint8_t id) {
+  switch (id) {
+    case 0:
+      return this->leds[0][0];
+      break;
+    case 1 ... 5:
+      return this->leds[1][0];
+      break;
+    case 6 ... 9:
+      return this->leds[2][0];
+      break;
+    case 10 ... 13:
+      return this->leds[3][0];
+      break;
+    case 14 ... 18:
+      return this->leds[4][0];
+      break;
+    case 19 ... 23:
+      return this->leds[5][0];
+      break;
+    default:
+      return this->leds[0][0];
+  }
 }
 
 void PatternController::setHex(uint8_t id, CRGB color) {

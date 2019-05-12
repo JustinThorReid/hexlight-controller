@@ -35,9 +35,9 @@ unsigned long startMillis = 0;
 bool waitMode;
 
 #define ROLLING_COUNT 100
-int activeRollingValues[ROLLING_COUNT];
-int activeRollingIndex = 0;
-int activeRollingCount = 0;
+uint8_t activeRollingValues[ROLLING_COUNT];
+uint8_t activeRollingIndex = 0;
+uint8_t activeRollingCount = 0;
 
 void loop() {  
   if(waitMode) {
@@ -58,7 +58,7 @@ void activeStateStart() {
   }
 
   startMillis = millis();
-  ledController->setType(0);
+  ledController->setType(2);
   Serial.println("Set type done");
 }
 
@@ -70,8 +70,8 @@ void activeState() {
 
   // Get average light value
   float avg = 0;
-  int pMax = 0;
-  int pMin = 255;
+  int16_t pMax = 0;
+  int16_t pMin = 255;
   for(int i = 0; i < activeRollingCount; i++) {
     avg += activeRollingValues[i];
 

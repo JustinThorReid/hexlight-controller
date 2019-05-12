@@ -1,3 +1,4 @@
+
 #include <avr/sleep.h>
 #include <avr/power.h>
 
@@ -6,7 +7,7 @@
 #define PRESISTOR_PIN A0
 #define RANDOM_PIN A2
 
-#define MIN_LIGHT 40
+#define MIN_LIGHT 30
 
 volatile int f_timer=0;
 PatternController *ledController;
@@ -58,7 +59,7 @@ void activeStateStart() {
   }
 
   startMillis = millis();
-  ledController->setType(2);
+  ledController->setType(3);
   Serial.println("Set type done");
 }
 

@@ -4,6 +4,7 @@
 #include "PWalk.h"
 #include "PSolidGlow.h"
 #include "PSpecks.h"
+#include "PSnake.h"
 
 #define LED_PER_HEX 12 // leds per hex
 #define LINE_0_PIXEL_COUNT 5
@@ -56,6 +57,9 @@ void PatternController::setType(uint8_t patternId) {
     case 2:
       this->currentPattern = new P_Specks(this);
       break;
+    case 3:
+      this->currentPattern = new P_Snake(this);
+      break;
     default:
       this->currentPattern = NULL;
   }
@@ -82,30 +86,30 @@ void PatternController::clear() {
   FastLED.clear(false);
 }
 
-CRGB PatternController::getHex(uint8_t id) {
-  switch (id) {
-    case 0:
-      return this->leds[0][0];
-      break;
-    case 1 ... 5:
-      return this->leds[1][0];
-      break;
-    case 6 ... 9:
-      return this->leds[2][0];
-      break;
-    case 10 ... 13:
-      return this->leds[3][0];
-      break;
-    case 14 ... 18:
-      return this->leds[4][0];
-      break;
-    case 19 ... 23:
-      return this->leds[5][0];
-      break;
-    default:
-      return this->leds[0][0];
-  }
-}
+// CRGB PatternController::getHex(uint8_t id) {
+//   switch (id) {
+//     case 0:
+//       return this->leds[0][0];
+//       break;
+//     case 1 ... 5:
+//       return this->leds[1][0];
+//       break;
+//     case 6 ... 9:
+//       return this->leds[2][0];
+//       break;
+//     case 10 ... 13:
+//       return this->leds[3][0];
+//       break;
+//     case 14 ... 18:
+//       return this->leds[4][0];
+//       break;
+//     case 19 ... 23:
+//       return this->leds[5][0];
+//       break;
+//     default:
+//       return this->leds[0][0];
+//   }
+// }
 
 void PatternController::setHex(uint8_t id, CRGB color) {
   CRGB *leds;
@@ -151,4 +155,57 @@ void PatternController::setHex(uint8_t id, CRGB color) {
   for(uint8_t i = 0; i < pixelLen; i++) {
     leds[pixelStart + i] = color;
   }
+}
+
+const uint8_t PatternController::map[][6] = {{
+  10,6,1,255,19,14 //0
+},{
+  6,2,255,255,255,0 //1
+},{
+  255,255,3,255,1,6 //2
+},{
+  255,4,255,5,255,2 //3
+},{
+  255,255,255,255,3,255 //4
+},{
+  3,255,255,255,255,255 //5
+},{
+  7,255,2,1,0,10 //6
+},{
+  12,8,255,6,10,11 //7
+},{
+  255,255,9,255,7,12 //8
+},{
+  255,255,255,255,255,8 //9
+},{
+  11,7,6,0,14,15 //10
+},{
+  255,12,7,10,15,13 //11
+},{
+  255,255,8,7,11,255 //12
+},{
+  255,255,11,15,16,255 //13
+},{
+  15,10,0,19,21,23 //14
+},{
+  13,11,10,14,23,16 //15
+},{
+  255,13,15,23,17,255 //16
+},{
+  255,16,23,255,18,255 //17
+},{
+  255,17,255,255,255,255 //18
+},{
+  14,0,255,20,255,21 //19
+},{
+  19,255,255,255,255,255 //20
+},{
+  23,14,19,255,22,255 //21
+},{
+  255,21,255,255,255,255 //22
+},{
+  16,15,14,21,255,17 //23
+}};
+uint8_t* PatternController::getHexNeighboors(uint8_t id) {
+  return map[id];
 }

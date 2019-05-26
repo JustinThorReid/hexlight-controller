@@ -21,8 +21,9 @@ void P_Flood::tick(unsigned long milli) {
       for(uint8_t i = 0; i < HEX_COUNT; i++) { this->usedHex[i] = false; }
     } else {
       // Dim
-      this->color.v = /*floor((float)this->color.v / 1.5);*/ max(0, (int)this->color.v - ceil(sqrt((int)this->color.v)*2));
-      this->color.s = max(0, (int)this->color.s - ceil(sqrt((int)this->color.s)*2.5));
+      this->color.v = /*floor((float)this->color.v / 1.5);*/ max(15, (int)this->color.v - ceil(sqrt((int)this->color.v)*2));
+      this->color.h += 15; 
+      this->color.s = max(0, (int)this->color.s - ceil(sqrt((int)this->color.s)*1.5));
 
       uint8_t nextNext[HEX_COUNT];
       for(int8_t i = 0; i < HEX_COUNT; i++) {

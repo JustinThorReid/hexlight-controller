@@ -4,6 +4,8 @@
 #define HEX_COUNT 24
 #define LINE_COUNT 6
 
+#define PATTERN_COUNT 5
+
 #include <FastLED.h>
 class Pattern;
 

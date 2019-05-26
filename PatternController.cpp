@@ -42,10 +42,7 @@ PatternController::PatternController() {
 }
 
 void PatternController::setType(uint8_t patternId) {
-  FastLED.clear(true);
-  
-  // Free old memory
-  if(this->currentPattern) delete this->currentPattern;
+  this->unset();
   
   // Create new pattern
   switch (patternId) {

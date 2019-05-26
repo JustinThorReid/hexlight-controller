@@ -6,6 +6,7 @@
 
 #define PRESISTOR_PIN A0
 #define RANDOM_PIN A2
+#define BUTTON_PIN 10
 
 #define MIN_LIGHT 30
 
@@ -13,8 +14,6 @@ volatile int f_timer=0;
 PatternController *ledController;
 
 void setup() {
-  // For debugging
-  Serial.begin(9600);
   setupSleep();
   
   // put your setup code here, to run once:
@@ -23,8 +22,8 @@ void setup() {
 
   // Initialize sensor pins
   pinMode(PRESISTOR_PIN, INPUT);
+  pinMode(BUTTON_PIN, INPUT);
 
-  Serial.println("SETUP DONE");
   activeStateStart();
 }
 
@@ -40,6 +39,18 @@ uint8_t activeRollingValues[ROLLING_COUNT];
 uint8_t activeRollingIndex = 0;
 uint8_t activeRollingCount = 0;
 
+bool buttonState = false;
+bool checkButton() {
+  bool currentButton = (digitalRead(BUTTON_PIN) == HIGH);
+
+  // If the button state is different than last time and it is current pressed
+  bool result = currentButton != buttonState && currentButton;
+  // Update button state for next time
+  buttonState = currentButton;
+
+  return result;
+}
+
 void loop() {  
   if(waitMode) {
     activeState();
@@ -48,9 +59,13 @@ void loop() {
   }
 }
 
+void startRandomPattern() {
+  startMillis = millis();
+  ledController->setType(random(0, PATTERN_COUNT));
+}
+
 void activeStateStart() {
   waitMode = MODE_ACTIVE;
-  Serial.println("Active");
 
   activeRollingIndex = 0;
   activeRollingCount = 0;
@@ -58,9 +73,7 @@ void activeStateStart() {
     activeRollingValues[i] = 0;
   }
 
-  startMillis = millis();
-  ledController->setType(4);
-  Serial.println("Set type done");
+  startRandomPattern();
 }
 
 void activeState() {  
@@ -85,6 +98,11 @@ void activeState() {
   if(avg < MIN_LIGHT) {      
     waitStateStart();
     return;
+  }
+
+  // Check button
+  if(checkButton()) {
+    startRandomPattern();
   }
 
   // Keep the min/max range at least MIN_LIGHT wide

@@ -16,6 +16,8 @@ void setup() {
 
   randomSeed(analogRead(RANDOM_PIN));
   ledController = new PatternController();
+
+  startRandomPattern();
 }
 
 unsigned long startMillis = 0;
@@ -43,5 +45,5 @@ void loop() {
 
 void startRandomPattern() {
   startMillis = millis();
-  ledController->setType(random(0, PATTERN_COUNT));
+  ledController->setType(random(1, PATTERN_COUNT));
 }

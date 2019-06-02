@@ -5,6 +5,7 @@
 #include "PSpecks.h"
 #include "PSnake.h"
 #include "PFlood.h"
+#include "PFloodRainbow.h"
 
 #define LED_PER_HEX 12 // leds per hex
 #define LINE_0_PIXEL_COUNT 5
@@ -59,6 +60,9 @@ void PatternController::setType(uint8_t patternId) {
       break;
     case 4:
       this->currentPattern = new P_Flood(this);
+      break;
+    case 5:
+      this->currentPattern = new P_FloodRainbow(this);
       break;
     default:
       this->currentPattern = NULL;

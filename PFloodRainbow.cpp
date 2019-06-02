@@ -1,9 +1,9 @@
-#include "PFlood.h"
+#include "PFloodRainbow.h"
 
-#define SPEED 125
+#define SPEED 145
 #define DELAY 1500
 
-void P_Flood::tick(unsigned long milli) {
+void P_FloodRainbow::tick(unsigned long milli) {
   uint8_t tickDelta = (milli - this->lastTime);
   this->lastTime = milli;
   this->nextEvent = max(0, (int)this->nextEvent - tickDelta);
@@ -20,30 +20,39 @@ void P_Flood::tick(unsigned long milli) {
       for(uint8_t i = 0; i < HEX_COUNT; i++) { this->usedHex[i] = false; }
     } else {
       // Dim
-      this->color.v = max(15, (int)this->color.v - ceil(sqrt((int)this->color.v)*2));
-      this->color.h += 15; 
-      this->color.s = max(0, (int)this->color.s - ceil(sqrt((int)this->color.s)*1.5));
+      this->color.h += 4; 
 
       uint8_t nextNext[HEX_COUNT];
       for(int8_t i = 0; i < HEX_COUNT; i++) {
         nextNext[i] = 255;
       }
       
+      uint8_t max = random(1,3);
       for(uint8_t i = 0; i < HEX_COUNT && this->nextHex[i] != 255; i++) {
         uint8_t id = this->nextHex[i];
-        this->parent->setHex(id, this->color);
-        this->usedHex[id] = true;
 
-        // Add to nextnext
-        uint8_t *map = this->parent->getHexNeighboors(id);
-        for(uint8_t k = 0; k < 6; k++) {
-          uint8_t nextID = map[k];
+        if(i < max) {
+          this->parent->setHex(id, this->color);
+          this->usedHex[id] = true;
+            
+          // Add to nextnext
+          uint8_t *map = this->parent->getHexNeighboors(id);
+          for(uint8_t k = 0; k < 6; k++) {
+            uint8_t nextID = map[k];
 
-          // If the hex is black
-          if(nextID != 255 && !this->usedHex[nextID]) {
+            // If the hex is black
+            if(nextID != 255 && !this->usedHex[nextID]) {
+              uint8_t j = 0;
+              while(nextNext[j] != 255 && nextNext[j] != nextID) { j++; }
+              nextNext[j] = nextID;
+            }
+          }
+        } else {
+          // If we are skipping it this time, add it to next next so we don't lose it
+          if(id != 255 && !this->usedHex[id]) {
             uint8_t j = 0;
-            while(nextNext[j] != 255 && nextNext[j] != nextID) { j++; }
-            nextNext[j] = nextID;
+            while(nextNext[j] != 255 && nextNext[j] != id) { j++; }
+            nextNext[j] = id;
           }
         }
       }
@@ -56,7 +65,7 @@ void P_Flood::tick(unsigned long milli) {
   }
 }
 
-void P_Flood::init() {
+void P_FloodRainbow::init() {
   this->nextEvent = 0;
 
   // Clear next hex

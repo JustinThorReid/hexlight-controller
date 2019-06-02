@@ -1,4 +1,3 @@
-#include <FastLED.h>
 #include "constants.c"
 #include "PatternController.h"
 #include "PWalk.h"

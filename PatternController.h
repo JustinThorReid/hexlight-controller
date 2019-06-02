@@ -7,6 +7,7 @@
 #define PATTERN_COUNT 5
 
 #include <FastLED.h>
+
 class Pattern;
 
 class PatternController {

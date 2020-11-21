@@ -36,7 +36,7 @@ void P_FloodRainbow::tick(unsigned long milli) {
           this->usedHex[id] = true;
             
           // Add to nextnext
-          uint8_t *map = this->parent->getHexNeighboors(id);
+          const uint8_t *map = this->parent->getHexNeighboors(id);
           for(uint8_t k = 0; k < 6; k++) {
             uint8_t nextID = map[k];
 

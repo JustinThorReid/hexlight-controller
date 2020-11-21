@@ -9,8 +9,8 @@ void P_SolidGlow::tick(unsigned long milli) {
     float vVariance = (sin(rotation2) + cos(rotation1) + 2.0) / 4.0;
     
     uint8_t h = ((int)this->hexColors[i]) - (60 * sVariance);
-    uint8_t s = max(0, ((int)this->hexOffsets[i]) - (150 * sVariance));
-    uint8_t v = max(0, ((int)this->hexOffsets[i]) - (100 * vVariance));
+    uint8_t s = max(0, (int)(this->hexOffsets[i] - 150 * sVariance));
+    uint8_t v = max(0, (int)(this->hexOffsets[i] - 100 * vVariance));
 
     this->parent->setHex(i, CHSV(h, 250, 200));
   }

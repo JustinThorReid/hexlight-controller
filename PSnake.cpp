@@ -25,7 +25,7 @@ void P_Snake::tick(unsigned long milli) {
     this->nextSpeck = TIME;
 
     // Move the point
-    uint8_t* map = this->parent->getHexNeighboors(this->lastID);
+    const uint8_t* map = this->parent->getHexNeighboors(this->lastID);
 
     // Count options
     uint8_t count = 0;

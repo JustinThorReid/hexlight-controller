@@ -13,20 +13,21 @@ class Pattern;
 class PatternController {
   public:
     PatternController();
-  
+
+    void setBrightness(uint8_t level);
     void setType(uint8_t patternId);
     void tick(unsigned long milli);
     void unset();
   
     /// Get a hex color (based on first LED)
-    CRGB PatternController::getHex(uint8_t id);
+    CRGB getHex(uint8_t id);
     
     /// Set a hex to a solid color
-    void PatternController::setHex(uint8_t id, CRGB color);
+    void setHex(uint8_t id, CRGB color);
     /// Set all leds to black
-    void PatternController::clear();
+    void clear();
     /// Gets all neighboring HEX ids, 255 is none
-    uint8_t* PatternController::getHexNeighboors(uint8_t id);
+    const uint8_t* getHexNeighboors(uint8_t id);
   
   private:
     CRGB *leds[LINE_COUNT];

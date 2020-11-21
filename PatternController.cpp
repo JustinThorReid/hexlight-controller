@@ -10,17 +10,17 @@
 #define LED_PER_HEX 12 // leds per hex
 #define LINE_0_PIXEL_COUNT 5
 #define LINE_1_PIXEL_COUNT LED_PER_HEX * 5
-#define LINE_6_PIXEL_COUNT LED_PER_HEX * 4
-#define LINE_10_PIXEL_COUNT LED_PER_HEX * 4
-#define LINE_14_PIXEL_COUNT LED_PER_HEX * 5
-#define LINE_19_PIXEL_COUNT LED_PER_HEX * 5
+#define LINE_3_PIXEL_COUNT LED_PER_HEX * 4
+#define LINE_4_PIXEL_COUNT LED_PER_HEX * 4
+#define LINE_5_PIXEL_COUNT LED_PER_HEX * 5
+#define LINE_6_PIXEL_COUNT LED_PER_HEX * 5
 
-#define LINE_0_PIN 2
-#define LINE_1_PIN 3
-#define LINE_6_PIN 4
-#define LINE_10_PIN 5
-#define LINE_14_PIN 6
-#define LINE_19_PIN 7
+#define LINE_0_PIN 0
+#define LINE_1_PIN 23
+#define LINE_3_PIN 32
+#define LINE_4_PIN 27
+#define LINE_5_PIN 25
+#define LINE_6_PIN 33
 
 PatternController::PatternController() {
   this->currentPattern = NULL;
@@ -28,17 +28,17 @@ PatternController::PatternController() {
   // Configure FastLED
   this->leds[0] = new CRGB[LINE_0_PIXEL_COUNT];
   this->leds[1] = new CRGB[LINE_1_PIXEL_COUNT];
-  this->leds[2] = new CRGB[LINE_6_PIXEL_COUNT];
-  this->leds[3] = new CRGB[LINE_10_PIXEL_COUNT];
-  this->leds[4] = new CRGB[LINE_14_PIXEL_COUNT];
-  this->leds[5] = new CRGB[LINE_19_PIXEL_COUNT];   
+  this->leds[2] = new CRGB[LINE_3_PIXEL_COUNT];
+  this->leds[3] = new CRGB[LINE_4_PIXEL_COUNT];
+  this->leds[4] = new CRGB[LINE_5_PIXEL_COUNT];
+  this->leds[5] = new CRGB[LINE_6_PIXEL_COUNT];   
   
-  FastLED.addLeds<WS2812, LINE_0_PIN, GRB>(this->leds[0], LINE_0_PIXEL_COUNT);
+  //FastLED.addLeds<WS2812, LINE_0_PIN, GRB>(this->leds[0], LINE_0_PIXEL_COUNT);
   FastLED.addLeds<WS2812, LINE_1_PIN, GRB>(this->leds[1], LINE_1_PIXEL_COUNT);
-  FastLED.addLeds<WS2812, LINE_6_PIN, GRB>(this->leds[2], LINE_6_PIXEL_COUNT);
-  FastLED.addLeds<WS2812, LINE_10_PIN, GRB>(this->leds[3], LINE_10_PIXEL_COUNT);
-  FastLED.addLeds<WS2812, LINE_14_PIN, GRB>(this->leds[4], LINE_14_PIXEL_COUNT);
-  FastLED.addLeds<WS2812, LINE_19_PIN, GRB>(this->leds[5], LINE_19_PIXEL_COUNT);
+  FastLED.addLeds<WS2812, LINE_3_PIN, GRB>(this->leds[2], LINE_3_PIXEL_COUNT);
+  FastLED.addLeds<WS2812, LINE_4_PIN, GRB>(this->leds[3], LINE_4_PIXEL_COUNT);
+  FastLED.addLeds<WS2812, LINE_5_PIN, GRB>(this->leds[4], LINE_5_PIXEL_COUNT);
+  FastLED.addLeds<WS2812, LINE_6_PIN, GRB>(this->leds[5], LINE_6_PIXEL_COUNT);
 }
 
 void PatternController::setType(uint8_t patternId) {
@@ -71,6 +71,10 @@ void PatternController::setType(uint8_t patternId) {
   if(this->currentPattern) this->currentPattern->init();
   
   FastLED.show();  
+}
+
+void PatternController::setBrightness(uint8_t level) {
+  FastLED.setBrightness(level);
 }
 
 void PatternController::tick(unsigned long milli) {
@@ -210,6 +214,6 @@ const uint8_t PatternController::map[][6] = {{
 },{
   16,15,14,21,255,17 //23
 }};
-uint8_t* PatternController::getHexNeighboors(uint8_t id) {
+const uint8_t* PatternController::getHexNeighboors(uint8_t id) {
   return map[id];
 }

@@ -20,9 +20,9 @@ void P_Flood::tick(unsigned long milli) {
       for(uint8_t i = 0; i < HEX_COUNT; i++) { this->usedHex[i] = false; }
     } else {
       // Dim
-      this->color.v = max(15, (int)this->color.v - ceil(sqrt((int)this->color.v)*2));
+      this->color.v = max(15, this->color.v - (int)ceil(sqrt(this->color.v)*2));
       this->color.h += 15; 
-      this->color.s = max(0, (int)this->color.s - ceil(sqrt((int)this->color.s)*1.5));
+      this->color.s = max(0, this->color.s - (int)ceil(sqrt(this->color.s)*1.5));
 
       uint8_t nextNext[HEX_COUNT];
       for(int8_t i = 0; i < HEX_COUNT; i++) {
@@ -35,7 +35,7 @@ void P_Flood::tick(unsigned long milli) {
         this->usedHex[id] = true;
 
         // Add to nextnext
-        uint8_t *map = this->parent->getHexNeighboors(id);
+        const uint8_t *map = this->parent->getHexNeighboors(id);
         for(uint8_t k = 0; k < 6; k++) {
           uint8_t nextID = map[k];
 

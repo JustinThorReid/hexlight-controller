@@ -27,15 +27,15 @@ public:
         static MQTTHelper instance;
         return &instance;
     };
-    
+
     MQTTNotification lastMsg;
 
     /** Must be called before use */
-    void startConnection(const char *ssid, const char *pass, const char *mqtt_host, const char *mqtt_user, const char *mqtt_pass, const char *mqtt_client);
+    void startConnection(char *ssid, const char *pass, const char *mqtt_host, const char *mqtt_user, const char *mqtt_pass, const char *mqtt_client);
     /** Start recieving notifications for a topic */
     void subscribe(const char *topic, MQTTQOS qos);
     /** Call every loop, do not alter the response object */
-    MQTTNotification *loop();
+    const MQTTNotification *loop();
     /** Post a message to a topic
      * @return true if successful
      */

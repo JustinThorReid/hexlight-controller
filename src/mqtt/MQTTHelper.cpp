@@ -3,14 +3,13 @@
 #define SerialPrintln(msg) Serial.println(msg)
 #define SerialPrint(msg) Serial.print(msg)
 
-
 void messageReceived(String &topic, String &payload)
 {
     SerialPrintln("incoming: " + topic + " - " + payload);
 
     MQTTHelper::getInstance()->lastMsg.topic = new char[topic.length() + 1];
     strcpy(MQTTHelper::getInstance()->lastMsg.topic, topic.c_str());
-    
+
     MQTTHelper::getInstance()->lastMsg.payload = new char[payload.length() + 1];
     strcpy(MQTTHelper::getInstance()->lastMsg.payload, payload.c_str());
 
@@ -26,17 +25,19 @@ MQTTHelper::MQTTHelper()
 {
 }
 
-MQTTNotification *MQTTHelper::loop()
+const MQTTNotification *MQTTHelper::loop()
 {
-  if(lastMsg.topic != nullptr) {
-    free(lastMsg.topic);
-    lastMsg.topic = nullptr;
-  }
-  
-  if(lastMsg.payload != nullptr) {
-    free(lastMsg.payload);
-    lastMsg.payload = nullptr;
-  }
+    if (lastMsg.topic != nullptr)
+    {
+        free(lastMsg.topic);
+        lastMsg.topic = nullptr;
+    }
+
+    if (lastMsg.payload != nullptr)
+    {
+        free(lastMsg.payload);
+        lastMsg.payload = nullptr;
+    }
 
     if (millis() - lastMillis > 10)
     {
@@ -68,7 +69,7 @@ void MQTTHelper::subscribe(const char *topic, MQTTQOS qos)
     client.subscribe(topic, qos);
 }
 
-void MQTTHelper::startConnection(const char *ssid, const char *pass, const char *mqtt_host, const char *mqtt_user, const char *mqtt_pass, const char *mqtt_client)
+void MQTTHelper::startConnection(char *ssid, const char *pass, const char *mqtt_host, const char *mqtt_user, const char *mqtt_pass, const char *mqtt_client)
 {
     this->mqtt_client = mqtt_client;
     this->mqtt_pass = mqtt_pass;

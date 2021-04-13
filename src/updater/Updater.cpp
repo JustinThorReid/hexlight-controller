@@ -8,7 +8,7 @@
 #include "Updater.h"
 
 uint8_t APP_VERSION = 1;
-WiFiClient wifiClient; // HTTP
+WiFiClientSecure wifiClient; // HTTP
 
 Updater::Updater()
 {
@@ -16,8 +16,8 @@ Updater::Updater()
 
 void Updater::loop()
 {
-    const char *PATH = "%s/v%d.bin";           // Set the URI to the .bin firmware
-    const unsigned long CHECK_INTERVAL = 6000; // Time interval between update checks (ms)
+    const char *PATH = "/ota-api/%s/%d.bin";             // Set the URI to the .bin firmware
+    const unsigned long CHECK_INTERVAL = 1000 * 60 * 60; // Time interval between update checks (ms)
 
     // Time interval check
     static unsigned long previousMillis;
@@ -27,14 +27,14 @@ void Updater::loop()
     previousMillis = currentMillis;
 
     // Create the download URL
-    char buff[32];
+    char buff[64];
     snprintf(buff, sizeof(buff), PATH, UPDATER_APPNAME, APP_VERSION + 1);
 
     Serial.print("Check for update file ");
     Serial.println(buff);
 
     // Make the GET request
-    HttpClient client(wifiClient, UPDATER_HOST, UPDATER_PORT);
+    HttpClient client(wifiClient, UPDATER_HOST, 443);
     client.get(buff);
 
     int statusCode = client.responseStatusCode();

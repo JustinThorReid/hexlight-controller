@@ -1,3 +1,5 @@
+#include <ssl_client.h>
+
 #include "secrets.h"
 #include "src/patterns/PatternController.h"
 #include "src/light-sensor.h"

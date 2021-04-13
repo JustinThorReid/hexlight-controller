@@ -53,6 +53,7 @@
             ],
             "intelliSenseMode": "gcc-x64",
             "includePath": [
+                "C:\\Users\\phatn\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\1.0.4\\libraries\\WiFiClientSecure\\src",
                 "C:\\Users\\phatn\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\1.0.4\\tools\\sdk\\include\\config",
                 "C:\\Users\\phatn\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\1.0.4\\tools\\sdk\\include\\app_trace",
                 "C:\\Users\\phatn\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\1.0.4\\tools\\sdk\\include\\app_update",

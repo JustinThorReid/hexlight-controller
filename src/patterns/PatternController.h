@@ -10,28 +10,26 @@
 
 class Pattern;
 
-class PatternController {
-  public:
-    PatternController();
+class PatternController
+{
+public:
+  PatternController();
 
-    void setBrightness(uint8_t level);
-    void setType(uint8_t patternId);
-    void tick(unsigned long milli);
-    void unset();
-  
-    /// Get a hex color (based on first LED)
-    CRGB getHex(uint8_t id);
-    
-    /// Set a hex to a solid color
-    void setHex(uint8_t id, CRGB color);
-    /// Set all leds to black
-    void clear();
-    /// Gets all neighboring HEX ids, 255 is none
-    const uint8_t* getHexNeighboors(uint8_t id);
-  
-  private:
-    CRGB *leds[LINE_COUNT];
-    Pattern *currentPattern;
-    const static uint8_t map[][6];
+  void setBrightness(uint8_t level);
+  void setType(uint8_t patternId);
+  void tick(unsigned long milli);
+  void unset();
+
+  /// Set a hex to a solid color
+  void setHex(uint8_t id, CRGB color);
+  /// Set all leds to black
+  void clear();
+  /// Gets all neighboring HEX ids, 255 is none
+  const uint8_t *getHexNeighboors(uint8_t id);
+
+private:
+  CRGB *leds[LINE_COUNT];
+  Pattern *currentPattern;
+  const static uint8_t map[][6];
 };
 #endif

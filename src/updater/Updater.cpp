@@ -7,6 +7,8 @@
 
 #include "Updater.h"
 
+static unsigned long previousMillis = 0;
+
 uint8_t APP_VERSION = 1;
 WiFiClientSecure wifiClient; // HTTP
 
@@ -20,9 +22,8 @@ void Updater::loop()
     const unsigned long CHECK_INTERVAL = 1000 * 60 * 60; // Time interval between update checks (ms)
 
     // Time interval check
-    static unsigned long previousMillis;
     unsigned long currentMillis = millis();
-    if (currentMillis - previousMillis < CHECK_INTERVAL)
+    if (currentMillis - previousMillis < CHECK_INTERVAL && previousMillis != 0)
         return;
     previousMillis = currentMillis;
 

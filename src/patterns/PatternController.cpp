@@ -31,12 +31,12 @@ PatternController::PatternController()
 
   Serial.println("LEDs allocated");
 
-  FastLED.addLeds<WS2812, LINE_1_PIN, GRB>(this->leds[0], LINE_1_PIXEL_COUNT);
+  FastLED.addLeds<WS2812, LINE_6_PIN, GRB>(this->leds[0], LINE_1_PIXEL_COUNT);
   FastLED.addLeds<WS2812, LINE_2_PIN, GRB>(this->leds[1], LINE_2_PIXEL_COUNT);
   FastLED.addLeds<WS2812, LINE_3_PIN, GRB>(this->leds[2], LINE_3_PIXEL_COUNT);
   FastLED.addLeds<WS2812, LINE_4_PIN, GRB>(this->leds[3], LINE_4_PIXEL_COUNT);
   FastLED.addLeds<WS2812, LINE_5_PIN, GRB>(this->leds[4], LINE_5_PIXEL_COUNT);
-  FastLED.addLeds<WS2812, LINE_6_PIN, GRB>(this->leds[5], LINE_6_PIXEL_COUNT);
+  FastLED.addLeds<WS2812, LINE_1_PIN, GRB>(this->leds[5], LINE_6_PIXEL_COUNT);
 
   Serial.println("Fast LED setup");
 }

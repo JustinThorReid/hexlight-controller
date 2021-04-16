@@ -65,6 +65,6 @@ void loop()
 void startRandomPattern()
 {
   startMillis = millis();
-  ledController->setType(random(1, PATTERN_COUNT));
-  //ledController->setType(99);
+  //ledController->setType(random(1, PATTERN_COUNT));
+  ledController->setType(99);
 }

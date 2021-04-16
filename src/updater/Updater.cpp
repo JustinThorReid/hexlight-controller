@@ -9,7 +9,7 @@
 
 static unsigned long previousMillis = 0;
 
-uint8_t APP_VERSION = 1;
+uint8_t APP_VERSION = 5;
 WiFiClientSecure wifiClient; // HTTP
 
 Updater::Updater()

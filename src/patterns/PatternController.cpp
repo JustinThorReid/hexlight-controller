@@ -31,12 +31,12 @@ PatternController::PatternController()
 
   Serial.println("LEDs allocated");
 
-  FastLED.addLeds<WS2812, LINE_6_PIN, GRB>(this->leds[0], LINE_1_PIXEL_COUNT);
-  FastLED.addLeds<WS2812, LINE_2_PIN, GRB>(this->leds[1], LINE_2_PIXEL_COUNT);
-  FastLED.addLeds<WS2812, LINE_3_PIN, GRB>(this->leds[2], LINE_3_PIXEL_COUNT);
-  FastLED.addLeds<WS2812, LINE_4_PIN, GRB>(this->leds[3], LINE_4_PIXEL_COUNT);
+  //FastLED.addLeds<WS2812, LINE_6_PIN, GRB>(this->leds[0], LINE_1_PIXEL_COUNT);
+  FastLED.addLeds<WS2812, LINE_1_PIN, GRB>(this->leds[1], LINE_2_PIXEL_COUNT);
+  FastLED.addLeds<WS2812, LINE_2_PIN, GRB>(this->leds[2], LINE_3_PIXEL_COUNT);
+  FastLED.addLeds<WS2812, LINE_3_PIN, GRB>(this->leds[3], LINE_4_PIXEL_COUNT);
   FastLED.addLeds<WS2812, LINE_5_PIN, GRB>(this->leds[4], LINE_5_PIXEL_COUNT);
-  FastLED.addLeds<WS2812, LINE_1_PIN, GRB>(this->leds[5], LINE_6_PIXEL_COUNT);
+  FastLED.addLeds<WS2812, LINE_4_PIN, GRB>(this->leds[5], LINE_6_PIXEL_COUNT);
 
   Serial.println("Fast LED setup");
 }
@@ -109,33 +109,6 @@ void PatternController::unset()
 void PatternController::clear()
 {
   FastLED.clear(false);
-}
-
-CRGB PatternController::getHex(uint8_t id)
-{
-  switch (id)
-  {
-  case 0:
-    return this->leds[0][0];
-    break;
-  case 1 ... 5:
-    return this->leds[1][0];
-    break;
-  case 6 ... 9:
-    return this->leds[2][0];
-    break;
-  case 10 ... 13:
-    return this->leds[3][0];
-    break;
-  case 14 ... 18:
-    return this->leds[4][0];
-    break;
-  case 19 ... 23:
-    return this->leds[5][0];
-    break;
-  default:
-    return this->leds[0][0];
-  }
 }
 
 void PatternController::setHex(uint8_t id, CRGB color)

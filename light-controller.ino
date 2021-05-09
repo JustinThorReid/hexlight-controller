@@ -42,17 +42,24 @@ void loop()
 {
   updater->loop();
 
-  // const MQTTNotification *response = mqtt->loop();
-  // if (response && response->topic && strcmp(response->topic, MQTT_TOPIC_ENABLED) == 0)
-  // {
-  //   isEnabled = (strcmp(response->payload, "1") == 0);
-  // }
+  const MQTTNotification *response = mqtt->loop();
+  if (response && response->topic && strcmp(response->topic, MQTT_TOPIC_ENABLED) == 0)
+  {
+    isEnabled = (strcmp(response->payload, "1") == 0);
+  }
 
   // Check button
   if (checkButton())
   {
-    isEnabled = true;
-    startRandomPattern();
+    if (isEnabled)
+    {
+      isEnabled = false;
+    }
+    else
+    {
+      isEnabled = true;
+      startRandomPattern();
+    }
   }
 
   if (isEnabled)

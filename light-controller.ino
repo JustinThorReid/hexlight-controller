@@ -45,7 +45,14 @@ void loop()
   const MQTTNotification *response = mqtt->loop();
   if (response && response->topic && strcmp(response->topic, MQTT_TOPIC_ENABLED) == 0)
   {
-    isEnabled = (strcmp(response->payload, "1") == 0);
+    if (strcmp(response->payload, "1") == 0)
+    {
+      enable();
+    }
+    else
+    {
+      disable();
+    }
   }
 
   // Check button
@@ -53,12 +60,11 @@ void loop()
   {
     if (isEnabled)
     {
-      isEnabled = false;
+      disable();
     }
     else
     {
-      isEnabled = true;
-      startRandomPattern();
+      enable();
     }
   }
 
@@ -74,4 +80,16 @@ void startRandomPattern()
   startMillis = millis();
   ledController->setType(random(1, PATTERN_COUNT));
   //ledController->setType(0);
+}
+
+void disable()
+{
+  isEnabled = false;
+  ledController->unset();
+}
+
+void enable()
+{
+  isEnabled = true;
+  startRandomPattern();
 }

@@ -76,6 +76,7 @@ void MQTTHelper::startConnection(char *ssid, const char *pass, const char *mqtt_
     this->mqtt_user = mqtt_user;
 
     WiFi.begin(ssid, pass);
+    WiFi.setAutoReconnect(true);
     client.begin(mqtt_host, net);
     client.onMessage(messageReceived);
 

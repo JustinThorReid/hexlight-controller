@@ -61,7 +61,7 @@ const MQTTNotification *MQTTHelper::loop()
 
 bool MQTTHelper::send(const char *topic, const char *payload, bool retained, MQTTQOS qos)
 {
-    client.publish(topic, payload, retained, qos);
+    return client.publish(topic, payload, retained, qos);
 }
 
 void MQTTHelper::subscribe(const char *topic, MQTTQOS qos)
@@ -75,6 +75,9 @@ void MQTTHelper::startConnection(char *ssid, const char *pass, const char *mqtt_
     this->mqtt_pass = mqtt_pass;
     this->mqtt_user = mqtt_user;
 
+    Serial.print("ESP Board MAC Address:  ");
+    Serial.println(WiFi.macAddress());
+    WiFi.setHostname("Hex Light");
     WiFi.begin(ssid, pass);
     WiFi.setAutoReconnect(true);
     client.begin(mqtt_host, net);

@@ -1,7 +1,7 @@
 #ifndef _CONSTANTS
 #define _CONSTANTS
 
-#define PRESISTOR_PIN 13 //Photo resistor pin
+#define PRESISTOR_PIN 13 //Photo resistor pin // CAN NOT BE USED WITH WIFI ENABLED :(
 #define RANDOM_PIN 36
 #define BUTTON_PIN 14
 

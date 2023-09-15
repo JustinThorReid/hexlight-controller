@@ -12,4 +12,6 @@
 #define LINE_5_PIN 27
 #define LINE_6_PIN 26
 
+#define PATTERN_TIME_MS 3600000
+
 #endif

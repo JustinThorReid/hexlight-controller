@@ -17,8 +17,8 @@ bool isEnabled = true;
 void startRandomPattern()
 {
   startMillis = millis();
-  //ledController->setType(random(1, PATTERN_COUNT));
-  ledController->setType(0);
+  ledController->setType(random(1, PATTERN_COUNT));
+  //ledController->setType(0);
 }
 
 void disable()
@@ -120,6 +120,7 @@ void loop()
   if (isEnabled)
   {
     //ledController->setBrightness(getLightLevel());
+    if(startMillis > PATTERN_TIME_MS) startRandomPattern();
     ledController->tick(millis() - startMillis);
   }
 }

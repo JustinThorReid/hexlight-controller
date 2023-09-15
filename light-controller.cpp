@@ -119,9 +119,10 @@ void loop()
 
   if (isEnabled)
   {
+    unsigned long duration = millis() - startMillis;
     //ledController->setBrightness(getLightLevel());
-    if(startMillis > PATTERN_TIME_MS) startRandomPattern();
-    ledController->tick(millis() - startMillis);
+    if(duration > PATTERN_TIME_MS) startRandomPattern();
+    ledController->tick(duration);
   }
 }
 

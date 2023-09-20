@@ -4,7 +4,7 @@
 #define HEX_COUNT 24
 #define LINE_COUNT 6
 
-#define PATTERN_COUNT 6
+#define PATTERN_COUNT 7
 
 #include <FastLED.h>
 
@@ -17,6 +17,7 @@ public:
 
   void setBrightness(uint8_t level);
   void setType(uint8_t patternId);
+  /** Update the design for the current frame, milli should be time since pattern start not system start. */
   void tick(unsigned long milli);
   void unset();
 

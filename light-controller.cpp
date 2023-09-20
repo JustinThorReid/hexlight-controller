@@ -18,7 +18,7 @@ void startRandomPattern()
 {
   startMillis = millis();
   ledController->setType(random(1, PATTERN_COUNT));
-  //ledController->setType(0);
+  //ledController->setType(6);
 }
 
 void disable()

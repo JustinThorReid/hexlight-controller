@@ -7,6 +7,7 @@
 #include "PFlood.h"
 #include "PFloodRainbow.h"
 #include "PTest.h"
+#include "PWave.h"
 
 #define LED_PER_HEX 12 // leds per hex
 #define LINE_1_PIXEL_COUNT 5
@@ -68,6 +69,9 @@ void PatternController::setType(uint8_t patternId)
     break;
   case 5:
     this->currentPattern = new P_FloodRainbow(this);
+    break;
+  case 6:
+    this->currentPattern = new P_Wave(this);
     break;
   case 99:
     this->currentPattern = new P_Test(this);

@@ -35,14 +35,18 @@ void enable()
 
 unsigned long lastWifiMillis = 0;
 void checkWifi() {
+if (WiFi.status() == WL_CONNECTED)
+  Serial.println("WIFI Connected");
+
   if (WiFi.status() == WL_CONNECTED || WiFi.status() == WL_IDLE_STATUS) return;
-  if (millis() - lastWifiMillis < 1000) return; //Don't attempt to connect too often
+  if (millis() - lastWifiMillis < 10000) return; //Don't attempt to connect too often
   
   lastWifiMillis = millis();
 
   Serial.print("ESP Board MAC Address:  ");
   Serial.println(WiFi.macAddress());
   WiFi.disconnect(true);
+  WiFi.mode(WIFI_STA);
   WiFi.config(INADDR_NONE, INADDR_NONE, INADDR_NONE, INADDR_NONE);
   WiFi.setHostname("Hex Light");
   WiFi.begin(WIFI_SSID, WIFI_PASS);

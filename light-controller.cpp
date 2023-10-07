@@ -33,6 +33,22 @@ void enable()
   startRandomPattern();
 }
 
+unsigned long lastWifiMillis = 0;
+void checkWifi() {
+  if (WiFi.status() == WL_CONNECTED || WiFi.status() == WL_IDLE_STATUS) return;
+  if (millis() - lastWifiMillis < 1000) return; //Don't attempt to connect too often
+  
+  lastWifiMillis = millis();
+
+  Serial.print("ESP Board MAC Address:  ");
+  Serial.println(WiFi.macAddress());
+  WiFi.disconnect(true);
+  WiFi.config(INADDR_NONE, INADDR_NONE, INADDR_NONE, INADDR_NONE);
+  WiFi.setHostname("Hex Light");
+  WiFi.begin(WIFI_SSID, WIFI_PASS);
+  WiFi.setAutoReconnect(true);
+}
+
 void setupOTA() {
   ArduinoOTA
     .onStart([]() {
@@ -59,17 +75,31 @@ void setupOTA() {
       else if (error == OTA_RECEIVE_ERROR) Serial.println("Receive Failed");
       else if (error == OTA_END_ERROR) Serial.println("End Failed");
     });
+}
 
-  ArduinoOTA.begin();
+bool hasStarted = false;
+void checkOTA() {
+  if(WiFi.status() != WL_CONNECTED) return;
+
+  if(!hasStarted) {
+    hasStarted = true;
+    ArduinoOTA.begin();
+    return;
+  }
+
+  ArduinoOTA.handle();
 }
 
 void setup()
 {
+  randomSeed(analogRead(RANDOM_PIN));
+  
   Serial.begin(115200);
   Serial.println("Startup begin");
+  checkWifi();
 
   mqtt = MQTTHelper::getInstance();
-  mqtt->startConnection(WIFI_SSID, WIFI_PASS, MQTT_HOST, MQTT_USER, MQTT_PASS, MQTT_CLIENT);
+  mqtt->startConnection(MQTT_HOST, MQTT_USER, MQTT_PASS, MQTT_CLIENT);
   mqtt->subscribe(MQTT_TOPIC_ENABLED, MQTTQOS::AT_LEAST_ONCE);
 
   setupOTA();
@@ -78,18 +108,17 @@ void setup()
   //pinMode(PRESISTOR_PIN, INPUT);
   pinMode(BUTTON_PIN, INPUT);
 
-  randomSeed(analogRead(RANDOM_PIN));
   ledController = new PatternController();
 
   Serial.println("Startup start random");
   startRandomPattern();
-  delay(10);
   Serial.println("Startup complete");
 }
 
 void loop()
 {
-  ArduinoOTA.handle();
+  checkWifi();
+  checkOTA();
 
   const MQTTNotification *response = mqtt->loop();
   if (response && response->topic && strcmp(response->topic, MQTT_TOPIC_ENABLED) == 0)

@@ -39,7 +39,7 @@ const MQTTNotification *MQTTHelper::loop()
         lastMsg.payload = nullptr;
     }
 
-    if (millis() - lastMillis > 10)
+    if (millis() - lastMillis > 100)
     {
         lastMillis = millis();
 
@@ -69,17 +69,12 @@ void MQTTHelper::subscribe(const char *topic, MQTTQOS qos)
     client.subscribe(topic, qos);
 }
 
-void MQTTHelper::startConnection(char *ssid, const char *pass, const char *mqtt_host, const char *mqtt_user, const char *mqtt_pass, const char *mqtt_client)
+void MQTTHelper::startConnection(const char *mqtt_host, const char *mqtt_user, const char *mqtt_pass, const char *mqtt_client)
 {
     this->mqtt_client = mqtt_client;
     this->mqtt_pass = mqtt_pass;
     this->mqtt_user = mqtt_user;
 
-    Serial.print("ESP Board MAC Address:  ");
-    Serial.println(WiFi.macAddress());
-    WiFi.setHostname("Hex Light");
-    WiFi.begin(ssid, pass);
-    WiFi.setAutoReconnect(true);
     client.begin(mqtt_host, net);
     client.onMessage(messageReceived);
 
@@ -88,19 +83,9 @@ void MQTTHelper::startConnection(char *ssid, const char *pass, const char *mqtt_
 
 void MQTTHelper::connect()
 {
-    SerialPrint("checking wifi...");
-    while (WiFi.status() != WL_CONNECTED)
-    {
-        SerialPrint(".");
-        delay(1000);
-    }
-
-    SerialPrint("\nconnecting to MQTT...");
-    while (!client.connect(mqtt_client, mqtt_user, mqtt_pass))
-    {
-        SerialPrint(".");
-        delay(1000);
-    }
-
-    SerialPrintln("\nconnected!");
+    SerialPrintln("checking wifi...");
+    if(WiFi.status() != WL_CONNECTED) return;
+    SerialPrintln("connecting to MQTT...");
+    if(!client.connect(mqtt_client, mqtt_user, mqtt_pass)) return;
+    SerialPrintln("connected!");
 }

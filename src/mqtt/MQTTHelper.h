@@ -31,7 +31,7 @@ public:
     MQTTNotification lastMsg;
 
     /** Must be called before use */
-    void startConnection(char *ssid, const char *pass, const char *mqtt_host, const char *mqtt_user, const char *mqtt_pass, const char *mqtt_client);
+    void startConnection(const char *mqtt_host, const char *mqtt_user, const char *mqtt_pass, const char *mqtt_client);
     /** Start recieving notifications for a topic */
     void subscribe(const char *topic, MQTTQOS qos);
     /** Call every loop, do not alter the response object */
